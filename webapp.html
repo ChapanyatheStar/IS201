@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Health Quiz Web App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d8e9d2;
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #quiz-container {
+      margin-top: 20px;
+    }
+
+    input {
+      margin: 5px 0;
+      padding: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #558b6e;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #336655;
+    }
+  </style>
+</head>
+<body>
+  <h1>Health & Fitness Quiz</h1>
+  <p>Test your health knowledge!</p>
+  <button id="start-quiz">Start Quiz</button>
+  <div id="quiz-container"></div>
+
+  <script>
+    const quizData = [
+      { q: "How many minutes of moderate exercise is recommended per week?", a: "150" },
+      { q: "Which vitamin is mainly produced when exposed to sunlight?", a: "Vitamin D" },
+      { q: "Which nutrient is essential for muscle repair?", a: "Protein" }
+    ];
+
+    const container = document.getElementById('quiz-container');
+    const button = document.getElementById('start-quiz');
+
+    button.addEventListener('click', () => {
+      container.innerHTML = '';
+      quizData.forEach((item, index) => {
+        const question = document.createElement('p');
+        question.textContent = `${index + 1}. ${item.q}`;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Your answer';
+        input.dataset.answer = item.a;
+        container.appendChild(question);
+        container.appendChild(input);
+      });
+
+      const submit = document.createElement('button');
+      submit.textContent = 'Submit Answers';
+      submit.onclick = () => {
+        const inputs = container.querySelectorAll('input');
+        let score = 0;
+        inputs.forEach(input => {
+          if (input.value.trim().toLowerCase() === input.dataset.answer.toLowerCase()) {
+            score++;
+          }
+        });
+        alert(`You got ${score} out of ${quizData.length} correct!`);
+      };
+
+      container.appendChild(document.createElement('br'));
+      container.appendChild(submit);
+    });
+  </script>
+</body>
+</html>
